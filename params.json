@@ -1,0 +1,6 @@
+{
+  "name": "Virtualpetsimulator",
+  "tagline": "Pet Simulation in Java",
+  "body": "### Welcome to Virtual Pet Simulator.\r\nThis page contains the new Java Virtual Pet Simulator, version alpha. This simulator is unlike most Java simulators, especially because of our features. Some features include:\r\n* Dynamic aging\r\n* Real time pet alerts\r\n* Easy GUI and saving system\r\n* much more...\r\n\r\n### Downloading Information\r\nWhen you download this file as a ZIP or TAR Ball, it will contain multiple files including all files required to run Virtual Pet Simulator. If you don't know what you're doing, use Install.exe. (not available now) Otherwise, set your directory to /out/artifacts/ and run App.jar. \r\n\r\n### Application Updates\r\nThis application will be updated on a daily basis, with upgrades to the program and new features as well. In a later day, the updater will be included in the program.\r\n\r\n### Authors and Contributors\r\nThis program was created by GitHub user: @Metatricity, at [this page.](https://github.com/Metatricity/VirtualPetSimulator/)\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
