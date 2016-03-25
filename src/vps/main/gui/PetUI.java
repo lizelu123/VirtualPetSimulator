@@ -1,6 +1,7 @@
 package vps.main.gui;
 
 import vps.main.Pet;
+import vps.util.io;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,9 @@ public class PetUI extends JFrame implements ActionListener {
     static JLabel medpackCount = new JLabel();
     static int medpacks = 10;
     static int food = 25;
+    static JMenuBar menuBar = new JMenuBar();
+    JMenu file = new JMenu("File");
+    JMenuItem save = new JMenu("Save");
     JButton healButton = new JButton("", new ImageIcon("src\\vps\\files\\ambulanceIcon.png"));
     JButton feedButton = new JButton("", new ImageIcon("src\\vps\\files\\feedIcon.png"));
     JButton playButton = new JButton("", new ImageIcon("src\\vps\\files\\playIcon.png"));
@@ -58,10 +62,13 @@ public class PetUI extends JFrame implements ActionListener {
         healButton.addActionListener(this);
         feedButton.addActionListener(this);
         quitButton.addActionListener(this);
+        save.addActionListener(this);
         add(medpackCount);
         add(buttons);
         add(foodCount);
         add(bars);
+        menuBar.add(file);
+        file.add(save);
 
 
     }
@@ -76,6 +83,7 @@ public class PetUI extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         PetUI p = new PetUI();
+        p.setJMenuBar(menuBar);
         p.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         p.setSize(640, 480);
         p.setVisible(true);
@@ -124,6 +132,10 @@ public class PetUI extends JFrame implements ActionListener {
                    setMedpacks(getMedpacks() - 1);
                }
             }
+
+        }
+        else if(e.getSource() == save) {
+            io.replaceMainPet("");
         }
 
     }
