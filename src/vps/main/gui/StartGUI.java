@@ -30,6 +30,8 @@ public class StartGUI extends JFrame implements ActionListener {
         menuBar.add(fileMenu);
         fileMenu.add(newSave);
         fileMenu.add(openSave);
+        newSave.addActionListener(this);
+        openSave.addActionListener(this);
         vpstitle.setFont(new Font ("Segoe Print", Font.BOLD , 72));
 
     }
@@ -40,23 +42,47 @@ public class StartGUI extends JFrame implements ActionListener {
         s.setJMenuBar(menuBar);
         s.setVisible(true);
     }
+
+    public static String getReadPath() {
+        return readPath;
+    }
+
+    public static void setReadPath(String readPath) {
+        StartGUI.readPath = readPath;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == play) {
             try {
                 if (readPath.equalsIgnoreCase("")) {
                     JOptionPane.showMessageDialog(null, "Please select a save file.\nFile --> Open Save / New Save");
-                    JFileChooser jf = new JFileChooser();
-                    jf.showOpenDialog(null);
-                    readPath = jf.getSelectedFile().getAbsolutePath();
-                    io.replaceMainPet(readPath);
 
+                }
+                else {
+                    PetUI.main(null);
                 }
             }
                 catch(NullPointerException n) {
                     JOptionPane.showMessageDialog(null,"You didn't choose a file.");
                 }
             }
+        else if(e.getSource() == newSave) {
+            String saveName = JOptionPane.showInputDialog(null,"Please name this save file:");
+            JOptionPane.showMessageDialog(null,"Select your new save directory.");
+            JFileChooser jf = new JFileChooser();
+            jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            jf.showOpenDialog(null);
+            readPath = jf.getSelectedFile().getAbsolutePath()+"\\"+ saveName+".bin";
+            io.write(readPath);
+            io.replaceMainPet(readPath);
+        } else if (e.getSource() == openSave) {
+            JOptionPane.showMessageDialog(null,"Press OK to select your previous save file.");
+            JFileChooser jf = new JFileChooser();
+            jf.showOpenDialog(null);
+            readPath = jf.getSelectedFile().getAbsolutePath();
+            io.replaceMainPet(readPath);
+        }
         }
     }
 

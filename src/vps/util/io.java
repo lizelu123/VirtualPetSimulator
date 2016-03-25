@@ -2,7 +2,6 @@ package vps.util;
 
 import vps.main.Pet;
 import vps.main.gui.PetUI;
-
 import javax.swing.*;
 import java.io.*;
 
@@ -30,7 +29,7 @@ public class io implements Serializable {
                 os.close();
             }
         } catch (IOException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Unable to read save file.");
+            JOptionPane.showMessageDialog(null, "Unable to read save file. Please re-select your file before starting.");
         }
         return output;
     }

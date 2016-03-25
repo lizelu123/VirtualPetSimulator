@@ -21,6 +21,7 @@ public class PetUI extends JFrame implements ActionListener {
     static int medpacks = 10;
     static int food = 25;
     static JMenuBar menuBar = new JMenuBar();
+    JLabel petInfo = new JLabel("Name:" + mainPet.getName() + " | Age: "+mainPet.getAge());
     JMenu file = new JMenu("File");
     JMenuItem save = new JMenu("Save");
     JButton healButton = new JButton("", new ImageIcon("src\\vps\\files\\ambulanceIcon.png"));
@@ -63,6 +64,7 @@ public class PetUI extends JFrame implements ActionListener {
         feedButton.addActionListener(this);
         quitButton.addActionListener(this);
         save.addActionListener(this);
+        add(petInfo);
         add(medpackCount);
         add(buttons);
         add(foodCount);
@@ -87,9 +89,109 @@ public class PetUI extends JFrame implements ActionListener {
         p.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         p.setSize(640, 480);
         p.setVisible(true);
+        while (true) {
+            happinessBar.setValue((int) Math.round(mainPet.getHappiness()));
+            healthBar.setValue((int) Math.round(mainPet.getHealth()));
+            hungerBar.setValue((int) Math.round(mainPet.getHunger()));
+            mainPet.setHappiness(mainPet.getHappiness() - 0.1);
+            mainPet.setHunger(mainPet.getHunger() - 0.5);
+            //color set
+            /**
+             * if val greater than 75 = great
+             * if val less than 75 = good
+             * if val less than 50 = OK
+             * if val less than 25 = bad
+             * if val less than or equ 0 = dead/horrible
+             */
+
+            if (mainPet.getHappiness() > 75) {
+                happinessBar.setString("Ecstatic");
+                happinessBar.setForeground(Color.green);
+            }
+            if (mainPet.getHappiness() <= 75) {
+                happinessBar.setString("Happy");
+                happinessBar.setForeground(Color.magenta);
+            }
+            if (mainPet.getHappiness() <= 50) {
+                happinessBar.setString("OK");
+                happinessBar.setForeground(Color.orange);
+            }
+            if (mainPet.getHappiness() <= 25) {
+                happinessBar.setString("Sad");
+                happinessBar.setForeground(Color.red);
+            }
+            if (mainPet.getHappiness() <= 0) {
+                happinessBar.setString("Horrible");
+                happinessBar.setForeground(Color.black);
+
+            }
+
+            if (mainPet.getHealth() > 75) {
+                healthBar.setString("Great");
+                healthBar.setForeground(Color.green);
+            }
+            if (mainPet.getHealth() <= 75) {
+                healthBar.setString("Good");
+                healthBar.setForeground(Color.magenta);
+            }
+            if (mainPet.getHealth() <= 50) {
+                healthBar.setString("OK");
+                healthBar.setForeground(Color.orange);
+            }
+            if (mainPet.getHealth() <= 25) {
+                healthBar.setString("Requires attention");
+                healthBar.setForeground(Color.red);
+            }
+            if (mainPet.getHealth() <= 0) {
+                    healthBar.setString("Death");
+                    healthBar.setForeground(Color.black);
+                    JOptionPane.showMessageDialog(null, "Your pet: " + mainPet.getName() + " has died.");
+                p.dispose();
+                StartGUI.main(null);
+                break;
 
 
+
+            }
+
+            if (mainPet.getHunger() > 75) {
+                hungerBar.setString("Full");
+                hungerBar.setForeground(Color.green);
+            }
+            if (mainPet.getHunger() <= 75) {
+                hungerBar.setString("Great");
+                hungerBar.setForeground(Color.magenta);
+            }
+            if (mainPet.getHunger() <= 50) {
+                hungerBar.setString("Hungry");
+                hungerBar.setForeground(Color.orange);
+            }
+            if (mainPet.getHunger() <= 25) {
+                hungerBar.setString("Empty");
+                hungerBar.setForeground(Color.red);
+            }
+            if (mainPet.getHunger() <= 0) {
+                hungerBar.setString("Starving");
+                hungerBar.setForeground(Color.black);
+            }
+
+
+            //death values
+            if (mainPet.getHunger() <= 5) {
+                mainPet.setHealth(mainPet.getHealth() - 1);
+            }
+            if (mainPet.getHealth() <= 45) {
+                mainPet.setHappiness(mainPet.getHappiness() - 1);
+            }
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     public static int getFood() {
         return food;
