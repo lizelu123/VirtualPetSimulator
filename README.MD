@@ -1,6 +1,6 @@
-# Virtual Pet Simulator (alpha 1.1)
+# Virtual Pet Simulator (alpha 1.2)
 > Changelog
- * App created
- * Added save files
- * Added dynamic aging
+ * Removed use of save files for debugging purposes
+ * Removed dynamic aging
+ * Re finished all GUI
  
