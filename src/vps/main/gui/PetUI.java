@@ -12,15 +12,15 @@ import java.awt.event.ActionListener;
  * Created by jsomani on 3/23/2016.
  */
 public class PetUI extends JFrame implements ActionListener {
-    public static Pet mainPet = new Pet("Unknown Pet", 100, 100, 100, 100);
-    static JProgressBar healthBar = new JProgressBar(0, 100);
-    static JProgressBar hungerBar = new JProgressBar(0, 100);
-    static JProgressBar happinessBar = new JProgressBar(0, 100);
-    static JLabel foodCount = new JLabel();
-    static JLabel medpackCount = new JLabel();
-    static int medpacks = 10;
-    static int food = 25;
-    static JMenuBar menuBar = new JMenuBar();
+    public  Pet mainPet = new Pet("Unknown Pet", 100, 100, 100, 100);
+     JProgressBar healthBar = new JProgressBar(0, 100);
+     JProgressBar hungerBar = new JProgressBar(0, 100);
+     JProgressBar happinessBar = new JProgressBar(0, 100);
+     JLabel foodCount = new JLabel();
+     JLabel medpackCount = new JLabel();
+     int medpacks = 10;
+     int food = 25;
+     JMenuBar menuBar = new JMenuBar();
     JLabel petInfo = new JLabel("Name:" + mainPet.getName() + " | Age: "+mainPet.getAge());
     JMenu file = new JMenu("File");
     JMenuItem save = new JMenu("Save");
@@ -30,6 +30,112 @@ public class PetUI extends JFrame implements ActionListener {
     JButton quitButton = new JButton("", new ImageIcon("src\\vps\\files\\quitIcon.png"));
     JPanel buttons = new JPanel();
     JPanel bars = new JPanel();
+    public Thread game = new Thread(){
+        public void run() {
+            while (mainPet.isAlive()) {
+                happinessBar.setValue((int) Math.round(mainPet.getHappiness()));
+                healthBar.setValue((int) Math.round(mainPet.getHealth()));
+                hungerBar.setValue((int) Math.round(mainPet.getHunger()));
+                mainPet.setHappiness(mainPet.getHappiness() - 0.1);
+                mainPet.setHunger(mainPet.getHunger() - 0.5);
+                //color set
+                /**
+                 * if val greater than 75 = great
+                 * if val less than 75 = good
+                 * if val less than 50 = OK
+                 * if val less than 25 = bad
+                 * if val less than or equ 0 = dead/horrible
+                 */
+
+                if (mainPet.getHappiness() > 75) {
+                    happinessBar.setString("Ec");
+                    happinessBar.setForeground(Color.green);
+                }
+                if (mainPet.getHappiness() <= 75) {
+                    happinessBar.setString("Happy");
+                    happinessBar.setForeground(Color.magenta);
+                }
+                if (mainPet.getHappiness() <= 50) {
+                    happinessBar.setString("OK");
+                    happinessBar.setForeground(Color.orange);
+                }
+                if (mainPet.getHappiness() <= 25) {
+                    happinessBar.setString("Sad");
+                    happinessBar.setForeground(Color.red);
+                }
+                if (mainPet.getHappiness() <= 0) {
+                    happinessBar.setString("Horrible");
+                    happinessBar.setForeground(Color.black);
+
+                }
+
+                if (mainPet.getHealth() > 75) {
+                    healthBar.setString("Great");
+                    healthBar.setForeground(Color.green);
+                }
+                if (mainPet.getHealth() <= 75) {
+                    healthBar.setString("Good");
+                    healthBar.setForeground(Color.magenta);
+                }
+                if (mainPet.getHealth() <= 50) {
+                    healthBar.setString("OK");
+                    healthBar.setForeground(Color.orange);
+                }
+                if (mainPet.getHealth() <= 25) {
+                    healthBar.setString("Requires attention");
+                    healthBar.setForeground(Color.red);
+                }
+                if (mainPet.getHealth() <= 0) {
+                    healthBar.setString("Death");
+                    healthBar.setForeground(Color.black);
+                    JOptionPane.showMessageDialog(null, "Your pet: " + mainPet.getName() + " has died.");
+                    dispose();
+                    StartGUI.main(null);
+                    break;
+
+
+
+                }
+
+                if (mainPet.getHunger() > 75) {
+                    hungerBar.setString("Full");
+                    hungerBar.setForeground(Color.green);
+                }
+                if (mainPet.getHunger() <= 75) {
+                    hungerBar.setString("Great");
+                    hungerBar.setForeground(Color.magenta);
+                }
+                if (mainPet.getHunger() <= 50) {
+                    hungerBar.setString("Hungry");
+                    hungerBar.setForeground(Color.orange);
+                }
+                if (mainPet.getHunger() <= 25) {
+                    hungerBar.setString("Empty");
+                    hungerBar.setForeground(Color.red);
+                }
+                if (mainPet.getHunger() <= 0) {
+                    hungerBar.setString("Starving");
+                    hungerBar.setForeground(Color.black);
+                }
+
+
+                //death values
+                if (mainPet.getHunger() <= 5) {
+                    mainPet.setHealth(mainPet.getHealth() - 1);
+                }
+                if (mainPet.getHealth() <= 45) {
+                    mainPet.setHappiness(mainPet.getHappiness() - 1);
+                }
+
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
 
     public PetUI() {
         super("Pet UI");
@@ -75,130 +181,33 @@ public class PetUI extends JFrame implements ActionListener {
 
     }
 
-    public static int getMedpacks() {
-        return medpacks;
-    }
 
-    public static void setMedpacks(int medpacks) {
-        PetUI.medpacks = medpacks;
-    }
-
-    public static void main(String[] args) {
+    public  void main(String[] args) {
         PetUI p = new PetUI();
         p.setJMenuBar(menuBar);
         p.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         p.setSize(640, 480);
         p.setVisible(true);
-        while (true) {
-            happinessBar.setValue((int) Math.round(mainPet.getHappiness()));
-            healthBar.setValue((int) Math.round(mainPet.getHealth()));
-            hungerBar.setValue((int) Math.round(mainPet.getHunger()));
-            mainPet.setHappiness(mainPet.getHappiness() - 0.1);
-            mainPet.setHunger(mainPet.getHunger() - 0.5);
-            //color set
-            /**
-             * if val greater than 75 = great
-             * if val less than 75 = good
-             * if val less than 50 = OK
-             * if val less than 25 = bad
-             * if val less than or equ 0 = dead/horrible
-             */
-
-            if (mainPet.getHappiness() > 75) {
-                happinessBar.setString("Ecstatic");
-                happinessBar.setForeground(Color.green);
-            }
-            if (mainPet.getHappiness() <= 75) {
-                happinessBar.setString("Happy");
-                happinessBar.setForeground(Color.magenta);
-            }
-            if (mainPet.getHappiness() <= 50) {
-                happinessBar.setString("OK");
-                happinessBar.setForeground(Color.orange);
-            }
-            if (mainPet.getHappiness() <= 25) {
-                happinessBar.setString("Sad");
-                happinessBar.setForeground(Color.red);
-            }
-            if (mainPet.getHappiness() <= 0) {
-                happinessBar.setString("Horrible");
-                happinessBar.setForeground(Color.black);
-
-            }
-
-            if (mainPet.getHealth() > 75) {
-                healthBar.setString("Great");
-                healthBar.setForeground(Color.green);
-            }
-            if (mainPet.getHealth() <= 75) {
-                healthBar.setString("Good");
-                healthBar.setForeground(Color.magenta);
-            }
-            if (mainPet.getHealth() <= 50) {
-                healthBar.setString("OK");
-                healthBar.setForeground(Color.orange);
-            }
-            if (mainPet.getHealth() <= 25) {
-                healthBar.setString("Requires attention");
-                healthBar.setForeground(Color.red);
-            }
-            if (mainPet.getHealth() <= 0) {
-                    healthBar.setString("Death");
-                    healthBar.setForeground(Color.black);
-                    JOptionPane.showMessageDialog(null, "Your pet: " + mainPet.getName() + " has died.");
-                p.dispose();
-                StartGUI.main(null);
-                break;
-
-
-
-            }
-
-            if (mainPet.getHunger() > 75) {
-                hungerBar.setString("Full");
-                hungerBar.setForeground(Color.green);
-            }
-            if (mainPet.getHunger() <= 75) {
-                hungerBar.setString("Great");
-                hungerBar.setForeground(Color.magenta);
-            }
-            if (mainPet.getHunger() <= 50) {
-                hungerBar.setString("Hungry");
-                hungerBar.setForeground(Color.orange);
-            }
-            if (mainPet.getHunger() <= 25) {
-                hungerBar.setString("Empty");
-                hungerBar.setForeground(Color.red);
-            }
-            if (mainPet.getHunger() <= 0) {
-                hungerBar.setString("Starving");
-                hungerBar.setForeground(Color.black);
-            }
-
-
-            //death values
-            if (mainPet.getHunger() <= 5) {
-                mainPet.setHealth(mainPet.getHealth() - 1);
-            }
-            if (mainPet.getHealth() <= 45) {
-                mainPet.setHappiness(mainPet.getHappiness() - 1);
-            }
-
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        io.replaceMainPet(StartGUI.readPath);
+        p.game.start();
         }
-    }
 
 
-    public static int getFood() {
+    public  int getFood() {
         return food;
     }
 
-    public static void setFood(int food) {
-        PetUI.food = food;
+
+    public int getMedpacks() {
+        return medpacks;
+    }
+
+    public void setMedpacks(int medpacks) {
+        this.medpacks = medpacks;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
     }
 
     @Override

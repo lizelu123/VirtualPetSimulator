@@ -11,6 +11,7 @@ public class Pet implements Serializable {
     double happiness;
     double hunger;
     double health;
+    boolean alive = true;
 
     public Pet(String name, int age, double happiness, double hunger, double health) {
         this.name = name;
@@ -19,6 +20,18 @@ public class Pet implements Serializable {
         this.hunger = hunger;
         this.health = health;
 
+        if(getHealth() <= 0 ) {
+            setAlive(false);
+        }
+
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
     }
 
     @Override

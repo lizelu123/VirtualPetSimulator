@@ -13,7 +13,8 @@ public class io implements Serializable {
 
     public static void replaceMainPet(String f) {
         /* Replaces the main pet with the saved version of the pet. */
-        PetUI.mainPet = get(f);
+        PetUI p = new PetUI();
+        p.mainPet = get(f);
     }
 
     public static Pet get(String f) {
@@ -37,11 +38,12 @@ public class io implements Serializable {
     public static void write(String f) {
 /* Writes a pet to disk. */
 
+        PetUI p = new PetUI();
         try (FileOutputStream fs = new FileOutputStream(f)) {
 
             ObjectOutputStream os = new ObjectOutputStream(fs);
 
-            os.writeObject(PetUI.mainPet);
+            os.writeObject(p.mainPet);
 
 
             os.close();
