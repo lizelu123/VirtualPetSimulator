@@ -1,2 +1,0 @@
-This jar doesn't seem updated but it is.
-The exe hasn't been changed to match versions yet.
