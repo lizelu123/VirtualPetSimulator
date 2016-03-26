@@ -7,9 +7,10 @@ Pet Simulation in Java. See the current version directory for more Readme inform
 * Alpha 1.3 (unstable)
 * Alpha 1.4 (current, stable)
 
-Stable - Good for use, should be used.
-Unstable - Should not be used and should only be debugged.
-Current - The latest version of VPS.
+### Version flags
+* Stable - Good for use, should be used.
+* Unstable - Should not be used and should only be debugged.
+* Current - The latest version of VPS.
 
 ## Expected Date of 1.5 release
 * 3/25/2016 or 3/26/2016
