@@ -10,8 +10,51 @@ public class Pet implements Serializable {
     int age;
     double happiness;
     double hunger;
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
     double health;
+    int food = 10;
+    int medpacks = 10;
     boolean alive = true;
+    double money = 2000;
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", happiness=" + happiness +
+                ", hunger=" + hunger +
+                ", health=" + health +
+                ", food=" + food +
+                ", medpacks=" + medpacks +
+                ", money=" + money +
+                ", alive=" + alive +
+                '}';
+    }
+
+    public int getFood() {
+        return food;
+    }
+
+    public void setFood(int food) {
+        this.food = food;
+    }
+
+    public int getMedpacks() {
+        return medpacks;
+    }
+
+    public void setMedpacks(int medpacks) {
+        this.medpacks = medpacks;
+    }
 
     public Pet(String name, int age, double happiness, double hunger, double health) {
         this.name = name;
@@ -32,17 +75,6 @@ public class Pet implements Serializable {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
-    }
-
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", happiness=" + happiness +
-                ", hunger=" + hunger +
-                ", health=" + health +
-                '}';
     }
 
     public String getName() {

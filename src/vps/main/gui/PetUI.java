@@ -12,16 +12,12 @@ import java.awt.event.ActionListener;
  * Created by jsomani on 3/23/2016.
  */
 public class PetUI extends JFrame implements ActionListener {
-    public  Pet mainPet = new Pet("Unknown Pet", 100, 100, 100, 100);
+     public static Pet mainPet = new Pet("Unknown Pet", 100, 100, 100, 100);
      JProgressBar healthBar = new JProgressBar(0, 100);
      JProgressBar hungerBar = new JProgressBar(0, 100);
      JProgressBar happinessBar = new JProgressBar(0, 100);
-     JLabel foodCount = new JLabel();
-     JLabel medpackCount = new JLabel();
-     int medpacks = 10;
-     int food = 25;
-     JMenuBar menuBar = new JMenuBar();
-    JLabel petInfo = new JLabel("Name:" + mainPet.getName() + " | Age: "+mainPet.getAge());
+    JMenuBar menuBar = new JMenuBar();
+    JLabel petInfo = new JLabel("Name:" + mainPet.getName() + ", Age: "+mainPet.getAge() + ", MedPack: "+mainPet.getMedpacks() + ", Food: " +mainPet.getFood());
     JMenu file = new JMenu("File");
     JMenuItem save = new JMenu("Save");
     JButton healButton = new JButton("", new ImageIcon("src\\vps\\files\\ambulanceIcon.png"));
@@ -33,6 +29,7 @@ public class PetUI extends JFrame implements ActionListener {
     public Thread game = new Thread(){
         public void run() {
             while (mainPet.isAlive()) {
+                petInfo.setText("Name:" + mainPet.getName() + ", Age: "+mainPet.getAge() + ", MedPack: "+mainPet.getMedpacks() + ", Food: " +mainPet.getFood());
                 happinessBar.setValue((int) Math.round(mainPet.getHappiness()));
                 healthBar.setValue((int) Math.round(mainPet.getHealth()));
                 hungerBar.setValue((int) Math.round(mainPet.getHunger()));
@@ -48,8 +45,9 @@ public class PetUI extends JFrame implements ActionListener {
                  */
 
                 if (mainPet.getHappiness() > 75) {
-                    happinessBar.setString("Ec");
+                    happinessBar.setString("Ecstatic");
                     happinessBar.setForeground(Color.green);
+                    mainPet.setMoney(mainPet.getMoney()+1);
                 }
                 if (mainPet.getHappiness() <= 75) {
                     happinessBar.setString("Happy");
@@ -171,9 +169,7 @@ public class PetUI extends JFrame implements ActionListener {
         quitButton.addActionListener(this);
         save.addActionListener(this);
         add(petInfo);
-        add(medpackCount);
         add(buttons);
-        add(foodCount);
         add(bars);
         menuBar.add(file);
         file.add(save);
@@ -182,7 +178,7 @@ public class PetUI extends JFrame implements ActionListener {
     }
 
 
-    public  void main(String[] args) {
+    public void main() {
         PetUI p = new PetUI();
         p.setJMenuBar(menuBar);
         p.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -193,44 +189,28 @@ public class PetUI extends JFrame implements ActionListener {
         }
 
 
-    public  int getFood() {
-        return food;
-    }
-
-
-    public int getMedpacks() {
-        return medpacks;
-    }
-
-    public void setMedpacks(int medpacks) {
-        this.medpacks = medpacks;
-    }
-
-    public void setFood(int food) {
-        this.food = food;
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quitButton) {
-            int quit = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?");
+            int quit = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?"); // ask if you want to quit
             if (quit == 0) {
-                System.exit(0);
+                System.exit(0); //exit
             } else {
-                //do nothing, just stay
+               //do nothing
             }
         } else if (e.getSource() == feedButton) {
-            if (getFood() <= 0) {
+            if (mainPet.getFood() <= 0) { //check if out of food
                 JOptionPane.showMessageDialog(null, "You are out of food.");
-            } else if (mainPet.getHunger() > 100) {
+            } else if (mainPet.getHunger() > 100) { //check if you need food
                 JOptionPane.showMessageDialog(null, "You do not need food right now.");
             } else {
                 mainPet.setHunger(mainPet.getHunger() + 20);
-                setFood(getFood() - 1);
+                mainPet.setFood(mainPet.getFood() - 1);
 
             }
         } else if (e.getSource() == healButton) {
-            if (getMedpacks() <= 0) {
+            if (mainPet.getMedpacks() <= 0) {
                 JOptionPane.showMessageDialog(null, "You are out of medpacks.");
             } else if (mainPet.getHealth() > 100) {
                 JOptionPane.showMessageDialog(null, "You do not need a medpack right now.");
@@ -240,13 +220,13 @@ public class PetUI extends JFrame implements ActionListener {
                    JOptionPane.showMessageDialog(null, "You do not need a medpack right now.");
                }
                 else {
-                   setMedpacks(getMedpacks() - 1);
+                   mainPet.setMedpacks(mainPet.getMedpacks() - 1);
                }
             }
 
         }
         else if(e.getSource() == save) {
-            io.replaceMainPet("");
+            io.write(StartGUI.readPath);
         }
 
     }

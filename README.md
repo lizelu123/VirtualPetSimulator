@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-#Alpha 1.4 release
+#Alpha 1.5 release
 
 ##Changes
- * Completed Startup GUI
- * Added Pet Death
-=======
-#Alpha 1.3 release
+ * Added use for save files
+ * Added medpacks and food
 
-##Changes
-* Created all new Start GUI
-* Working on better save files
->>>>>>> origin/master
+##Requires Fixing
+ * After pet death, another JMenuBar is added to StartGUI

@@ -28,6 +28,7 @@ public class io implements Serializable {
                 output = (Pet) os.readObject();
 
                 os.close();
+                System.out.println(output);
             }
         } catch (IOException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Unable to read save file. Please re-select your file before starting.");
@@ -47,6 +48,7 @@ public class io implements Serializable {
 
 
             os.close();
+            System.out.println(p.mainPet);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Unable to write save file.");
             e.printStackTrace();

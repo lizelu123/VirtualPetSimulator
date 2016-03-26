@@ -6,20 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import vps.util.io;
-import vps.util.io.*;
+
 
 /**
  * Created by jsomani on 3/25/2016.
  */
 public class StartGUI extends JFrame implements ActionListener {
+    static final double GAME_VERSION = 1.5;
     public static String readPath = "";
     static JMenuBar menuBar = new JMenuBar();
-    JLabel vpstitle = new JLabel("VPS Alpha 1.4", JLabel.CENTER);
+    JLabel vpstitle = new JLabel("VPS Alpha " + getGameVersion(), JLabel.CENTER);
     JMenu fileMenu = new JMenu("File");
     JMenuItem newSave = new JMenuItem("New Save");
     JMenuItem openSave = new JMenuItem("Open Save");
     JButton play = new JButton("Play");
     JButton help = new JButton("Help");
+    PetUI p = new PetUI();
 
     public StartGUI() {
         super("Startup");
@@ -28,6 +30,7 @@ public class StartGUI extends JFrame implements ActionListener {
         add(play);
         add(help);
         play.addActionListener(this);
+        help.addActionListener(this);
         menuBar.add(fileMenu);
         fileMenu.add(newSave);
         fileMenu.add(openSave);
@@ -53,16 +56,22 @@ public class StartGUI extends JFrame implements ActionListener {
         StartGUI.readPath = readPath;
     }
 
+    public static double getGameVersion() {
+        return GAME_VERSION;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == play) {
+        if(e.getSource() == help) {
+            JOptionPane.showMessageDialog(null, "Virtual Pet Simulator.\nCurrent version: "+ getGameVersion());
+        }
+        else if (e.getSource() == play) {
             try {
                 if (readPath.equalsIgnoreCase("")) {
                     JOptionPane.showMessageDialog(null, "Please select a save file.\nFile --> Open Save / New Save");
 
                 } else {
-                    PetUI p = new PetUI();
-                    p.main(null);
+                    p.main();
                 }
             } catch (NullPointerException n) {
                 JOptionPane.showMessageDialog(null, "You didn't choose a file.");
@@ -74,6 +83,8 @@ public class StartGUI extends JFrame implements ActionListener {
             jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             jf.showOpenDialog(null);
             readPath = jf.getSelectedFile().getAbsolutePath() + "\\" + saveName + ".bin";
+            String petName = JOptionPane.showInputDialog(null, "Please name your pet:");
+            p.mainPet.setName(petName);
             io.write(readPath);
 
         } else if (e.getSource() == openSave) {
