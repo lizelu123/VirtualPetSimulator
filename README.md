@@ -15,5 +15,10 @@ Pet Simulation in Java. See the current version directory for more Readme inform
 
 ## Expected Date of 1.6 release
 * 3/26/2016
+* 
+
+##Note
+
+GitHub version releases and pre-releases will be made after the last Beta release (appx. 4/1/2016)
 
 
